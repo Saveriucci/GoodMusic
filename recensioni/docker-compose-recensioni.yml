@@ -1,0 +1,38 @@
+services:
+  recensioni-db:
+    image: postgres:latest
+    container_name: recensioni-db
+    environment:
+      POSTGRES_DB: recensioni  # Nome del database
+      POSTGRES_USER: postgres  # Nome utente
+      POSTGRES_PASSWORD: postgres  # Password
+    volumes:
+      - recensioni-db-data:/var/lib/postgresql/data  # Volume per persistenza dei dati
+    ports:
+      - "5432:5432"  # Mappa la porta 5432 del contenitore alla porta 5432 della macchina host
+    networks:
+      - my-network
+
+  recensioni-service:
+    build: ./ # Indica la directory dove si trova il Dockerfile
+    container_name: recensioni-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://recensioni-db:5432/recensioni
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500  
+    depends_on:
+      - recensioni-db
+    ports:
+      - "${PORT_RECENSIONI:-8080}:${SERVER_PORT:-8080}"  # porta dinamica o 8080 
+    networks:
+      - my-network
+
+volumes:
+  recensioni-db-data:
+
+networks:
+  my-network:
+    external:
+      name: global-network

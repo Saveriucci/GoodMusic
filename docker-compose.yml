@@ -1,0 +1,15 @@
+services:
+  consul:
+    image: docker.io/hashicorp/consul
+    container_name: asw-consul
+    hostname: localhost
+    ports:
+      - "8500:8500"  # Porta di consul
+    networks:
+      - my-network
+    command: "consul agent -dev -client=0.0.0.0"  # Esegue consul in modalità sviluppo
+    
+networks:
+  my-network:
+    external:
+      name: global-network

@@ -1,0 +1,308 @@
+warning: in the working copy of '.gradle/buildOutputCleanup/cache.properties', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-get-connessioni-per-utente.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-get-connessioni.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-get-recensione.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-get-recensioni-per-album.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-get-recensioni-per-artista.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-get-recensioni-per-artisti.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-get-recensioni-per-genere.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-get-recensioni-per-generi.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-get-recensioni-per-recensore.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-get-recensioni-per-recensori.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-get-recensioni-seguite.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-get-recensioni.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-init-connessioni.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-init-recensioni.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-update-connessioni.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'do-update-recensioni.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'remove-dot-gradle-folder.sh', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'run-curl-client.sh', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/.gradle/buildOutputCleanup/buildOutputCleanup.lock b/.gradle/buildOutputCleanup/buildOutputCleanup.lock[m
+[1mindex cad37db..543b478 100644[m
+Binary files a/.gradle/buildOutputCleanup/buildOutputCleanup.lock and b/.gradle/buildOutputCleanup/buildOutputCleanup.lock differ
+[1mdiff --git a/.gradle/buildOutputCleanup/cache.properties b/.gradle/buildOutputCleanup/cache.properties[m
+[1mindex e007c1a..181eedd 100644[m
+[1m--- a/.gradle/buildOutputCleanup/cache.properties[m
+[1m+++ b/.gradle/buildOutputCleanup/cache.properties[m
+[36m@@ -1,2 +1,2 @@[m
+[31m-#Sat Nov 23 19:53:07 CET 2024[m
+[31m-gradle.version=8.10[m
+[32m+[m[32m#Tue Nov 26 10:20:13 UTC 2024[m
+[32m+[m[32mgradle.version=8.11[m
+[1mdiff --git a/.gradle/nb-cache/connessioni-77659192/project-info.ser b/.gradle/nb-cache/connessioni-77659192/project-info.ser[m
+[1mindex efef8ee..dea9b27 100644[m
+Binary files a/.gradle/nb-cache/connessioni-77659192/project-info.ser and b/.gradle/nb-cache/connessioni-77659192/project-info.ser differ
+[1mdiff --git a/.gradle/nb-cache/recensioni-1934868867/project-info.ser b/.gradle/nb-cache/recensioni-1934868867/project-info.ser[m
+[1mindex 1fd7b1d..bc3181f 100644[m
+Binary files a/.gradle/nb-cache/recensioni-1934868867/project-info.ser and b/.gradle/nb-cache/recensioni-1934868867/project-info.ser differ
+[1mdiff --git a/.gradle/nb-cache/recensioni-seguite-785013110/project-info.ser b/.gradle/nb-cache/recensioni-seguite-785013110/project-info.ser[m
+[1mindex 256a08d..ffce522 100644[m
+Binary files a/.gradle/nb-cache/recensioni-seguite-785013110/project-info.ser and b/.gradle/nb-cache/recensioni-seguite-785013110/project-info.ser differ
+[1mdiff --git a/.gradle/nb-cache/subprojects.ser b/.gradle/nb-cache/subprojects.ser[m
+[1mindex 866c4ce..78c1b12 100644[m
+Binary files a/.gradle/nb-cache/subprojects.ser and b/.gradle/nb-cache/subprojects.ser differ
+[1mdiff --git a/README.md b/README.md[m
+[1mindex 10c0ee8..0b08813 100644[m
+[1m--- a/README.md[m
+[1m+++ b/README.md[m
+[36m@@ -140,5 +140,3 @@[m [mSi veda la descrizione del progetto sul sito web del corso di [Architettura dei[m
+ ## Utilizzo di Kafka con Docker e Kubernetes[m
+ [m
+ Ecco alcune [note sull'Utilizzo di Kafka con Docker e Kubernetes](kafka/).[m
+[31m-# GoodMusic[m
+[31m-# GoodMusic[m
+[1mdiff --git a/connessioni/build.gradle b/connessioni/build.gradle[m
+[1mindex 2c57d99..de2abc4 100644[m
+[1m--- a/connessioni/build.gradle[m
+[1m+++ b/connessioni/build.gradle[m
+[36m@@ -29,7 +29,7 @@[m [mdependencies {[m
+ //  implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'[m
+ [m
+   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'[m
+[31m-  implementation 'org.hsqldb:hsqldb'[m
+[32m+[m[32m  implementation 'org.postgresql:postgresql:42.6.0'[m
+ [m
+   compileOnly 'org.projectlombok:lombok' [m
+   annotationProcessor 'org.projectlombok:lombok'[m
+[1mdiff --git a/connessioni/src/main/resources/application.yml b/connessioni/src/main/resources/application.yml[m
+[1mindex 4c4dcb9..733fb0f 100644[m
+[1m--- a/connessioni/src/main/resources/application.yml[m
+[1m+++ b/connessioni/src/main/resources/application.yml[m
+[36m@@ -18,6 +18,16 @@[m [mspring:[m
+         queryPassing: true [m
+     loadbalancer: [m
+       ribbon.enabled: false [m
+[32m+[m[32m  datasource:[m
+[32m+[m[32m    url: jdbc:postgresql://localhost:5432/connessioni[m
+[32m+[m[32m    username: postgres[m
+[32m+[m[32m    password: postgres[m
+[32m+[m[32m    driver-class-name: org.postgresql.Driver[m
+[32m+[m[32m    initialization-mode: always[m
+[32m+[m[32m  jpa:[m
+[32m+[m[32m    hibernate:[m
+[32m+[m[32m      ddl-auto: update[m
+[32m+[m[32m    database-platform: org.hibernate.dialect.PostgreSQLDialect[m
+ [m
+ server: [m
+   port: ${PORT:${SERVER_PORT:0}}[m
+[1mdiff --git a/recensioni-seguite/build.gradle b/recensioni-seguite/build.gradle[m
+[1mindex 2cda299..56c27c6 100644[m
+[1m--- a/recensioni-seguite/build.gradle[m
+[1m+++ b/recensioni-seguite/build.gradle[m
+[36m@@ -29,8 +29,9 @@[m [mdependencies {[m
+ //  implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'[m
+ //  implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'[m
+ [m
+[31m-//  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'[m
+[31m-//  implementation 'org.hsqldb:hsqldb'[m
+[32m+[m[32m  implementation 'org.springframework.boot:spring-boot-starter-data-jpa'[m
+[32m+[m[32m  implementation 'org.postgresql:postgresql:42.6.0'[m
+[32m+[m
+ [m
+   compileOnly 'org.projectlombok:lombok' [m
+   annotationProcessor 'org.projectlombok:lombok'[m
+[1mdiff --git a/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/connessioniclient/ConnessioniRestClientAdapter.java b/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/connessioniclient/ConnessioniRestClientAdapter.java[m
+[1mindex 4aa0c64..7c6d8a1 100644[m
+[1m--- a/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/connessioniclient/ConnessioniRestClientAdapter.java[m
+[1m+++ b/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/connessioniclient/ConnessioniRestClientAdapter.java[m
+[36m@@ -1,21 +1,19 @@[m
+[31m-package asw.goodmusic.recensioniseguite.connessioni;[m
+[32m+[m[32mpackage asw.goodmusic.recensioniseguite.connessioniclient;[m
+ [m
+[31m-import asw.goodmusic.recensioniseguite.domain.*; [m
+[32m+[m[32mimport java.util.Collection;[m[41m [m
+[32m+[m[32mimport java.util.stream.Collectors;[m
+ [m
+[31m-import asw.goodmusic.connessioni.api.rest.*; [m
+[31m-[m
+[31m-import org.springframework.stereotype.Service;[m
+ import org.springframework.beans.factory.annotation.Autowired;[m
+ import org.springframework.beans.factory.annotation.Qualifier;[m
+ import org.springframework.context.annotation.Primary;[m
+[31m-[m
+[32m+[m[32mimport org.springframework.stereotype.Service;[m
+ import org.springframework.web.reactive.function.client.WebClient;[m
+ import org.springframework.web.reactive.function.client.WebClientException;[m
+[31m-import reactor.core.publisher.Flux;[m
+[31m-import reactor.core.publisher.Mono;[m
+ [m
+[31m-import java.util.*; [m
+[31m-import java.util.stream.*; [m
+[32m+[m[32mimport asw.goodmusic.connessioni.api.rest.ConnessioneResponse;[m
+[32m+[m[32mimport asw.goodmusic.recensioniseguite.domain.Connessione;[m[41m [m
+[32m+[m[32mimport asw.goodmusic.recensioniseguite.domain.ConnessioniClientPort;[m
+[32m+[m[32mimport reactor.core.publisher.Flux;[m[41m [m
+ [m
+ @Service [m
+ @Primary [m
+[1mdiff --git a/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/domain/RecensioniClientPort.java b/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/domain/RecensioniClientPort.java[m
+[1mindex 06069d1..de831b6 100644[m
+[1m--- a/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/domain/RecensioniClientPort.java[m
+[1m+++ b/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/domain/RecensioniClientPort.java[m
+[36m@@ -8,4 +8,6 @@[m [mpublic interface RecensioniClientPort {[m
+ [m
+ 	public Collection<RecensioneBreve> getRecensioniByRecensori(Collection<String> recensori); [m
+ [m
+[32m+[m	[32mpublic Collection<RecensioneBreve> getRecensioniByGeneri(Collection<String> generi);[m
+[32m+[m
+ }[m
+[1mdiff --git a/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/domain/RecensioniSeguiteServiceRestBasedImpl.java b/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/domain/RecensioniSeguiteServiceRestBasedImpl.java[m
+[1mindex 0e0a18e..a70a138 100644[m
+[1m--- a/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/domain/RecensioniSeguiteServiceRestBasedImpl.java[m
+[1m+++ b/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/domain/RecensioniSeguiteServiceRestBasedImpl.java[m
+[36m@@ -46,17 +46,16 @@[m [mpublic class RecensioniSeguiteServiceRestBasedImpl implements RecensioniSeguiteS[m
+ 			recensioniSeguite.addAll(recensioniDiRecensori); [m
+ 		}[m
+ [m
+[31m-		/* ok, ma purtroppo chiama il metodo getRecensioniByGeneri che non è definito né implementato */ [m
+[31m-//		Collection<String> generiSeguiti = [m
+[31m-//			connessioni[m
+[31m-//				.stream()[m
+[31m-//				.filter(c -> c.getRuolo().equals("GENERE"))[m
+[31m-//				.map(c -> c.getSeguito())[m
+[31m-//				.collect(Collectors.toSet()); [m
+[31m-//		if (generiSeguiti.size()>0) {[m
+[31m-//			Collection<RecensioneBreve> recensioniDiGeneri = recensioniClient.getRecensioniByGeneri(generiSeguiti);[m
+[31m-//			recensioniSeguite.addAll(recensioniDiGeneri); [m
+[31m-//		}[m
+[32m+[m		[32mCollection<String> generiSeguiti =[m[41m [m
+[32m+[m			[32mconnessioni[m
+[32m+[m				[32m.stream()[m
+[32m+[m				[32m.filter(c -> c.getRuolo().equals("GENERE"))[m
+[32m+[m				[32m.map(c -> c.getSeguito())[m
+[32m+[m				[32m.collect(Collectors.toSet());[m[41m [m
+[32m+[m		[32mif (generiSeguiti.size()>0) {[m
+[32m+[m			[32mCollection<RecensioneBreve> recensioniDiGeneri = recensioniClient.getRecensioniByGeneri(generiSeguiti);[m
+[32m+[m			[32mrecensioniSeguite.addAll(recensioniDiGeneri);[m[41m [m
+[32m+[m		[32m}[m
+ [m
+ 		return recensioniSeguite; [m
+ 	}[m
+[1mdiff --git a/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/recensioniclient/RecensioniRestClientAdapter.java b/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/recensioniclient/RecensioniRestClientAdapter.java[m
+[1mindex 8ee0f5b..a31ea69 100644[m
+[1m--- a/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/recensioniclient/RecensioniRestClientAdapter.java[m
+[1m+++ b/recensioni-seguite/src/main/java/asw/goodmusic/recensioniseguite/recensioniclient/RecensioniRestClientAdapter.java[m
+[36m@@ -1,4 +1,4 @@[m
+[31m-package asw.goodmusic.recensioniseguite.enigmi;[m
+[32m+[m[32mpackage asw.goodmusic.recensioniseguite.recensioniclient;[m
+ [m
+ import asw.goodmusic.recensioniseguite.domain.*; [m
+ [m
+[36m@@ -55,6 +55,21 @@[m [mpublic class RecensioniRestClientAdapter implements RecensioniClientPort {[m
+ 		return recensioni; [m
+ 	}[m
+ [m
+[32m+[m	[32mpublic Collection<RecensioneBreve> getRecensioniByGeneri(Collection<String> generi) {[m
+[32m+[m		[32mCollection<RecensioneBreve> recensioni = null;[m[41m [m
+[32m+[m[32m        Flux<RecensioneBreveResponse> response = loadBalancedWebClient[m
+[32m+[m[32m                .get()[m
+[32m+[m				[32m.uri("http://recensioni/cercarecensioni/generi/{generi}", toString(generi))[m
+[32m+[m[32m                .retrieve()[m
+[32m+[m[32m                .bodyToFlux(RecensioneBreveResponse.class);[m
+[32m+[m[32m        try {[m
+[32m+[m[32m            recensioni = toRecensioni(response.collectList().block());[m
+[32m+[m[32m        } catch (WebClientException e) {[m
+[32m+[m[32m            e.printStackTrace();[m
+[32m+[m[32m        }[m
+[32m+[m		[32mreturn recensioni;[m[41m [m
+[32m+[m	[32m}[m
+[32m+[m
+ 	private RecensioneBreve toRecensione(RecensioneBreveResponse response) {[m
+ 		return new RecensioneBreve(response.getId(), response.getRecensore(), response.getAlbum(), [m
+ 				response.getArtista(), response.getGenere(), response.getSunto());[m
+[1mdiff --git a/recensioni-seguite/src/main/resources/application.yml b/recensioni-seguite/src/main/resources/application.yml[m
+[1mindex 2603a84..e5f7d6a 100644[m
+[1m--- a/recensioni-seguite/src/main/resources/application.yml[m
+[1m+++ b/recensioni-seguite/src/main/resources/application.yml[m
+[36m@@ -18,6 +18,16 @@[m [mspring:[m
+         queryPassing: true [m
+     loadbalancer: [m
+       ribbon.enabled: false [m
+[32m+[m[32m  datasource:[m
+[32m+[m[32m    url: jdbc:postgresql://localhost:5432/recensioni-seguite[m
+[32m+[m[32m    username: postgres[m
+[32m+[m[32m    password: postgres[m
+[32m+[m[32m    driver-class-name: org.postgresql.Driver[m
+[32m+[m[32m    initialization-mode: always[m
+[32m+[m[32m  jpa:[m
+[32m+[m[32m    hibernate:[m
+[32m+[m[32m      ddl-auto: update[m
+[32m+[m[32m    database-platform: org.hibernate.dialect.PostgreSQLDialect[m
+ [m
+ server: [m
+   port: ${PORT:${SERVER_PORT:0}}[m
+[1mdiff --git a/recensioni/build.gradle b/recensioni/build.gradle[m
+[1mindex a403495..d608f21 100644[m
+[1m--- a/recensioni/build.gradle[m
+[1m+++ b/recensioni/build.gradle[m
+[36m@@ -29,7 +29,7 @@[m [mdependencies {[m
+ //  implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'[m
+ [m
+   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'[m
+[31m-  implementation 'org.hsqldb:hsqldb'[m
+[32m+[m[32m  implementation 'org.postgresql:postgresql:42.6.0'[m
+ [m
+   compileOnly 'org.projectlombok:lombok' [m
+   annotationProcessor 'org.projectlombok:lombok'[m
+[1mdiff --git a/recensioni/src/main/resources/application.yml b/recensioni/src/main/resources/application.yml[m
+[1mindex 453de54..03ddad5 100644[m
+[1m--- a/recensioni/src/main/resources/application.yml[m
+[1m+++ b/recensioni/src/main/resources/application.yml[m
+[36m@@ -18,6 +18,17 @@[m [mspring:[m
+         queryPassing: true [m
+     loadbalancer: [m
+       ribbon.enabled: false [m
+[32m+[m[32m  datasource:[m
+[32m+[m[32m    url: jdbc:postgresql://localhost:5432/recensioni[m
+[32m+[m[32m    username: postgres[m
+[32m+[m[32m    password: postgres[m
+[32m+[m[32m    driver-class-name: org.postgresql.Driver[m
+[32m+[m[32m    initialization-mode: always[m
+[32m+[m[32m  jpa:[m
+[32m+[m[32m    hibernate:[m
+[32m+[m[32m      ddl-auto: update[m
+[32m+[m[32m    database-platform: org.hibernate.dialect.PostgreSQLDialect[m
+[32m+[m
+ [m
+ server: [m
+   port: ${PORT:${SERVER_PORT:0}}[m
+[1mdiff --git a/start-goodmusic.sh b/start-goodmusic.sh[m
+[1mdeleted file mode 100644[m
+[1mindex f015866..0000000[m
+[1m--- a/start-goodmusic.sh[m
+[1m+++ /dev/null[m
+[36m@@ -1,15 +0,0 @@[m
+[31m-#!/bin/bash[m
+[31m-[m
+[31m-# Script per avviare l'applicazione GoodMusic[m
+[31m-[m
+[31m-echo Running GOODMUSIC [m
+[31m-[m
+[31m-docker run -d --hostname localhost --name asw-consul --publish 8500:8500 docker.io/hashicorp/consul[m
+[31m-[m
+[31m-sleep 4 [m
+[31m-[m
+[31m-java -Xms64m -Xmx128m -jar recensioni/build/libs/recensioni.jar &[m
+[31m-java -Xms64m -Xmx128m -jar connessioni/build/libs/connessioni.jar &[m
+[31m-java -Xms64m -Xmx128m -jar recensioni-seguite/build/libs/recensioni-seguite.jar &[m
+[31m-[m
+[31m-java -Xms64m -Xmx128m -jar api-gateway/build/libs/api-gateway.jar &[m
+[1mdiff --git a/stop-goodmusic.sh b/stop-goodmusic.sh[m
+[1mdeleted file mode 100644[m
+[1mindex 2a14bc2..0000000[m
+[1m--- a/stop-goodmusic.sh[m
+[1m+++ /dev/null[m
+[36m@@ -1,13 +0,0 @@[m
+[31m-#!/bin/bash[m
+[31m-[m
+[31m-echo Halting GOODMUSIC   [m
+[31m-[m
+[31m-pkill -f 'recensioni-seguite.jar'[m
+[31m-pkill -f 'recensioni.jar'[m
+[31m-pkill -f 'connessioni.jar'[m
+[31m-pkill -f 'api-gateway.jar'[m
+[31m-[m
+[31m-sleep 4 [m
+[31m-[m
+[31m-docker stop asw-consul [m
+[31m-docker rm asw-consul [m

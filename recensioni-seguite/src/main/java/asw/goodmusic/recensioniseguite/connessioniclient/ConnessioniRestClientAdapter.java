@@ -1,21 +1,19 @@
-package asw.goodmusic.recensioniseguite.connessioni;
+package asw.goodmusic.recensioniseguite.connessioniclient;
 
-import asw.goodmusic.recensioniseguite.domain.*; 
+import java.util.Collection; 
+import java.util.stream.Collectors;
 
-import asw.goodmusic.connessioni.api.rest.*; 
-
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
-
+import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
-import java.util.*; 
-import java.util.stream.*; 
+import asw.goodmusic.connessioni.api.rest.ConnessioneResponse;
+import asw.goodmusic.recensioniseguite.domain.Connessione; 
+import asw.goodmusic.recensioniseguite.domain.ConnessioniClientPort;
+import reactor.core.publisher.Flux; 
 
 @Service 
 @Primary 

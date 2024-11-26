@@ -1,0 +1,38 @@
+services:
+  connessioni-db:
+    image: postgres:latest
+    container_name: connessioni-db
+    environment:
+      POSTGRES_DB: connessioni  # Nome del database
+      POSTGRES_USER: postgres  # Nome utente
+      POSTGRES_PASSWORD: postgres  # Password
+    volumes:
+      - connessioni-db-data:/var/lib/postgresql/data  # Volume per persistenza dei dati
+    ports:
+      - "5431:5432"  # Mappa la porta 5431 del contenitore alla porta 5431 della macchina host   
+    networks:
+      - my-network
+
+  connessioni-service:
+    build: ./ # Indica la directory dove si trova il Dockerfile
+    container_name: connessioni-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://connessioni-db:5432/connessioni
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500  
+    depends_on:
+      - connessioni-db
+    ports:
+      - "${PORT_CONNESSIONI:-8080}:${SERVER_PORT:-8080}"  # porta dinamica o 8080
+    networks:
+      - my-network
+
+volumes:
+  connessioni-db-data:
+
+networks:
+  my-network:
+    external:
+      name: global-network

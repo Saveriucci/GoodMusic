@@ -1,4 +1,4 @@
-package asw.goodmusic.recensioniseguite.enigmi;
+package asw.goodmusic.recensioniseguite.recensioniclient;
 
 import asw.goodmusic.recensioniseguite.domain.*; 
 
@@ -45,6 +45,21 @@ public class RecensioniRestClientAdapter implements RecensioniClientPort {
         Flux<RecensioneBreveResponse> response = loadBalancedWebClient
                 .get()
 				.uri("http://recensioni/cercarecensioni/recensori/{recensori}", toString(recensori))
+                .retrieve()
+                .bodyToFlux(RecensioneBreveResponse.class);
+        try {
+            recensioni = toRecensioni(response.collectList().block());
+        } catch (WebClientException e) {
+            e.printStackTrace();
+        }
+		return recensioni; 
+	}
+
+	public Collection<RecensioneBreve> getRecensioniByGeneri(Collection<String> generi) {
+		Collection<RecensioneBreve> recensioni = null; 
+        Flux<RecensioneBreveResponse> response = loadBalancedWebClient
+                .get()
+				.uri("http://recensioni/cercarecensioni/generi/{generi}", toString(generi))
                 .retrieve()
                 .bodyToFlux(RecensioneBreveResponse.class);
         try {

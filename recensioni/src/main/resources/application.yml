@@ -18,6 +18,17 @@ spring:
         queryPassing: true 
     loadbalancer: 
       ribbon.enabled: false 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/recensioni
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
 
 server: 
   port: ${PORT:${SERVER_PORT:0}}

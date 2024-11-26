@@ -1,0 +1,17 @@
+# immagine di java
+FROM openjdk:21-jdk-slim
+
+# Nome Servizio
+ARG APP_NAME=connessioni
+
+# Imposta la directory di lavoro
+WORKDIR /app
+
+# copia il file.jar dell'applicazione dal host al container docker
+COPY ./build/libs/connessioni.jar connessioni.jar
+
+# Esponi la porta su cui l'applicazione Spring Boot girerà
+EXPOSE 8080
+
+# Comando per avviare l'applicazione
+ENTRYPOINT ["java", "-jar", "connessioni.jar"]
