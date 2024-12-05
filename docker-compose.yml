@@ -8,8 +8,156 @@ services:
     networks:
       - my-network
     command: "consul agent -dev -client=0.0.0.0"  # Esegue consul in modalità sviluppo
-    
+
+  api-gateway-service:
+    build: ./api-gateway  # Indica la directory dove si trova il Dockerfile
+    container_name: api-gateway-service
+    ports:
+      - "${PORT:-8080}:${SERVER_PORT:-8080}"  # porta dinamica o 8080
+    environment:
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500     
+    networks:
+      - my-network
+
+  connessioni-db:
+      image: postgres:latest
+      container_name: connessioni-db
+      environment:
+        POSTGRES_DB: connessioni  # Nome del database
+        POSTGRES_USER: postgres  # Nome utente
+        POSTGRES_PASSWORD: postgres  # Password
+      volumes:
+        - connessioni-db-data:/var/lib/postgresql/data  # Volume per persistenza dei dati
+      ports:
+        - "5431:5432"  # Mappa la porta 5431 del contenitore alla porta 5431 della macchina host   
+      networks:
+        - my-network
+
+  connessioni-service:
+    build: ./connessioni # Indica la directory dove si trova il Dockerfile
+    container_name: connessioni-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://connessioni-db:5432/connessioni
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500  
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: asw-kafka:9092
+    depends_on:
+      - connessioni-db
+    ports:
+      - "${PORT_CONNESSIONI:-8080}:${SERVER_PORT:-8080}"  # porta dinamica o 8080
+    networks:
+      - my-network
+
+  filtro-service:
+    build: ./filtro # Indica la directory dove si trova il Dockerfile
+    container_name: filtro-service
+    environment:
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500  
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: asw-kafka:9092
+    ports:
+      - "${PORT_FILTRO:-8080}:${SERVER_PORT:-8080}"  # porta dinamica o 8080 
+    networks:
+      - my-network
+
+  kafka:
+    container_name: asw-kafka
+    image: docker.io/bitnami/kafka:3.8
+    # lasciamo la porta aperta sull'host per consentire la creazione dei topic
+    ports:
+      - "9092:9092"
+    volumes:
+      - "kafka_data:/bitnami"
+    environment:
+      # KRaft settings
+      - KAFKA_CFG_NODE_ID=0
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
+      # Listeners
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+      # Other settings 
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+      - KAFKA_CFG_NUM_PARTITIONS=4
+    networks:
+      - my-network
+
+  recensioni-db:
+    image: postgres:latest
+    container_name: recensioni-db
+    environment:
+      POSTGRES_DB: recensioni  # Nome del database
+      POSTGRES_USER: postgres  # Nome utente
+      POSTGRES_PASSWORD: postgres  # Password
+    volumes:
+      - recensioni-db-data:/var/lib/postgresql/data  # Volume per persistenza dei dati
+    ports:
+      - "5432:5432"  # Mappa la porta 5432 del contenitore alla porta 5432 della macchina host
+    networks:
+      - my-network
+
+  recensioni-service:
+    build: ./recensioni # Indica la directory dove si trova il Dockerfile
+    container_name: recensioni-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://recensioni-db:5432/recensioni
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500  
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: asw-kafka:9092
+    depends_on:
+      - recensioni-db
+    ports:
+      - "${PORT_RECENSIONI:-8080}:${SERVER_PORT:-8080}"  # porta dinamica o 8080 
+    networks:
+      - my-network
+
+  recensioni-seguite-db:
+    image: postgres:latest
+    container_name: recensioni-seguite-db
+    environment:
+      POSTGRES_DB: recensioni-seguite  # Nome del database
+      POSTGRES_USER: postgres  # Nome utente
+      POSTGRES_PASSWORD: postgres  # Password
+    volumes:
+      - recensioni-seguite-db-data:/var/lib/postgresql/data  # Volume per persistenza dei dati
+    ports:
+      - "5430:5432"  # Mappa la porta 5432 del contenitore alla porta 5432 della macchina host
+    networks:
+      - my-network
+
+  recensioni-seguite-service:
+    build: ./recensioni-seguite # Indica la directory dove si trova il Dockerfile
+    container_name: recensioni-seguite-service
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://recensioni-seguite-db:5432/recensioni-seguite
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_CLOUD_CONSUL_HOST: consul
+      SPRING_CLOUD_CONSUL_PORT: 8500  
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: asw-kafka:9092
+    depends_on:
+      - recensioni-seguite-db
+    ports:
+      - "${PORT_RECENSIONI_SEGUITE:-8080}:${SERVER_PORT:-8080}"  # porta dinamica o 8080
+    networks:
+      - my-network
+
+volumes:
+  connessioni-db-data:
+  recensioni-db-data:
+  recensioni-seguite-db-data:
+  kafka_data:
+    driver: local
+
+
 networks:
   my-network:
-    external:
-      name: global-network
+    name: global-network

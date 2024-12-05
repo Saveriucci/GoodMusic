@@ -1,0 +1,23 @@
+spring:
+  main:
+    web-application-type: NONE
+  kafka:
+    bootstrap-servers: asw-kafka:9092
+    consumer:
+      group-id: FiltroRecensioniToBrevi
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      # Se necessario, abilita i pacchetti di fiducia per la deserializzazione JSON
+      # properties:
+      #   spring.json.trusted.packages: "*"
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      batch-size: 0
+    filter:
+      name: RecensioniToRecensioniBrevi
+    channel:
+      in: asw-RecensioniCreatedToFiltro
+      out: asw-FiltroToRecensioniBreve
+    groupid: simple-filter

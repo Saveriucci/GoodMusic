@@ -1,7 +1,6 @@
-version: '3'
-
 services:
   kafka:
+    container_name: asw-kafka
     image: docker.io/bitnami/kafka:3.8
     # lasciamo la porta aperta sull'host per consentire la creazione dei topic
     ports:
@@ -22,7 +21,14 @@ services:
       # Other settings 
       - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
       - KAFKA_CFG_NUM_PARTITIONS=4
+    networks:
+      - my-network
 
 volumes:
   kafka_data:
     driver: local
+
+networks:
+  my-network:
+    external:
+      name: global-network

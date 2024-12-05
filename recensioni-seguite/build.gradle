@@ -31,6 +31,9 @@ dependencies {
 
   implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
   implementation 'org.postgresql:postgresql:42.6.0'
+  implementation 'org.springframework.kafka:spring-kafka:3.2.0'
+  implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'  // per la seriallizzazione dell'oggetto in json su kafka
+  implementation 'com.fasterxml.jackson.core:jackson-annotations:2.14.0'
 
 
   compileOnly 'org.projectlombok:lombok' 

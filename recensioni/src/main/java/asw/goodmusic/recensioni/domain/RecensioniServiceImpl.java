@@ -11,10 +11,16 @@ public class RecensioniServiceImpl implements RecensioniService {
 	@Autowired
 	private RecensioniRepository recensioniRepository;
 
+	@Autowired
+	private RecensioneCreatedEventPublisherPort recensioneCreatedEvent;
+
 	/* Crea una nuova recensione, a partire dai suoi dati. */ 
  	public Recensione createRecensione(String recensore, String album, String artista, String genere, String testo, String sunto) {
 		Recensione recensione = new Recensione(recensore, album, artista, genere, testo, sunto); 
 		recensione = recensioniRepository.save(recensione);
+		if(recensione != null){
+			recensioneCreatedEvent.publish(recensione);
+		}
 		return recensione;
 	}
 
