@@ -20,4 +20,5 @@ public interface RecensioniSeguiteService {
 
 	public void saveConnessione(String connessione);
 
+	public void deleteConnessione(String connessioneId);
 }

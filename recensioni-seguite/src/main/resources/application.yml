@@ -28,7 +28,7 @@ spring:
     bootstrap-servers: asw-kafka:9092  # Indirizzo del broker Kafka
     consumer:
       group-id: recensioni-seguite-group  # Gruppo del consumer
-      auto-offset-reset: latest
+      auto-offset-reset: earliest  
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
@@ -36,9 +36,11 @@ spring:
       topics:
         RecensioniBrevi:
           channel-in: asw-FiltroToRecensioniBreve  # Canale per RecensioniBrevi
-        connessioni:
-          channel-in: asw-Connessioni  # Canale per connessioni
+        ConnessioniCreated:
+          channel-in: asw-ConnessioneCreated  # Canale per connessioni
+        ConnessioniDeleted:
+          channel-in: asw-ConnessioneDeleted  # Canale per connessioni
 
 server:
-  port: ${PORT_RECENSIONI_SEGUITE:${SERVER_PORT:0}}
+  port: ${PORT:${SERVER_PORT:0}}
   forward-headers-strategy: framework

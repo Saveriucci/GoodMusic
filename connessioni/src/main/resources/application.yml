@@ -28,6 +28,18 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: asw-kafka:9092  # Indirizzo del broker Kafka
+    # Configurazione per il Producer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer  # Serializzatore per la chiave (String)
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer  # Serializzatore per il valore (Recensione)
+      name: ConnessioniProducer
+      # Topic a cui inviare i messaggi
+      channel:
+        out1: asw-ConnessioneCreated  # Nome del topic a cui inviare i messaggi Kafka
+        out2: asw-ConnessioneDeleted  # Nome del topic a cui inviare i messaggi Kafka
+      messages-to-send: 20
 
 server: 
   port: ${PORT:${SERVER_PORT:0}}

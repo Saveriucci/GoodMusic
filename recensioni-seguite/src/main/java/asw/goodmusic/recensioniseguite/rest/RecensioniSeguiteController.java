@@ -25,19 +25,22 @@ public class RecensioniSeguiteController {
 	private RecensioniSeguiteServiceAsync recensioniSeguiteServiceAsync;
 
 	@Autowired
-	private RecensioniSeguiteService recensioniSeguite;
+	private RecensioniSeguiteService recensioniSeguiteService;
 
 	/* Trova le recensioni degli utenti seguiti da utente. */
 	@GetMapping("/recensioniseguite/{utente}")
 	public Collection<RecensioneBreve> getRecensioniSeguite(@PathVariable String utente) {
 		Instant start = Instant.now();
 		logger.info("REST CALL: getRecensioniSeguite " + utente);
-		CompletableFuture<Collection<RecensioneBreve>> recensioniFuture = recensioniSeguiteServiceAsync
-				.getRecensioniSeguite(utente);
-		Collection<RecensioneBreve> recensioni = recensioniFuture.join();
 
-		// Collection<RecensioneBreve> recensioni =
-		// recensioniSeguiteService.getRecensioniSeguite(utente);
+		/*
+		 * CompletableFuture<Collection<RecensioneBreve>> recensioniFuture =
+		 * recensioniSeguiteServiceAsync
+		 * .getRecensioniSeguite(utente);
+		 * Collection<RecensioneBreve> recensioni = recensioniFuture.join();
+		 */
+
+		Collection<RecensioneBreve> recensioni = recensioniSeguiteService.getRecensioniSeguite(utente);
 
 		Duration duration = Duration.between(start, Instant.now());
 		logger.info("getRecensioniSeguite " + utente
