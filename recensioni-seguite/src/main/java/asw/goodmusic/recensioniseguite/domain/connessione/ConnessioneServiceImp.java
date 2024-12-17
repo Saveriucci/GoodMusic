@@ -52,6 +52,7 @@ public class ConnessioneServiceImp implements ConnessioneService {
         try {
             Collection<Connessione> connessioniUtente = connessioneRepository.findByUtente(utente);
             if (connessioniUtente != null) {
+                logger.info("LA CONNESSIONE NON é VUOTA ");
                 return connessioniUtente;
             } else {
                 throw new NoSuchElementException();

@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.*;
 import java.util.logging.Logger;
-import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,12 +32,10 @@ public class RecensioniSeguiteServiceImp implements RecensioniSeguiteService {
     @Override
     public Collection<RecensioneBreve> getRecensioniSeguite(String utente) {
         Collection<Connessione> connessioniUtente = connessioneService.getConnessioniByUtente(utente);
-        Collection<RecensioneBreve> recensioni = Stream.concat(
-                getRecensioniPerRecensori(connessioniUtente).stream(),
-                Stream.concat(
-                        getRecensioniPerArtisti(connessioniUtente).stream(),
-                        getRecensioniPerGeneri(connessioniUtente).stream()))
-                .collect(Collectors.toList());
+        Collection<RecensioneBreve> recensioni = new ArrayList<RecensioneBreve>();
+        recensioni.addAll(getRecensioniPerRecensori(connessioniUtente));
+        recensioni.addAll(getRecensioniPerArtisti(connessioniUtente));
+        recensioni.addAll(getRecensioniPerGeneri(connessioniUtente));
         return recensioni;
     }
 
@@ -51,9 +48,9 @@ public class RecensioniSeguiteServiceImp implements RecensioniSeguiteService {
             // salvo
             recensioneBreveService.saveRecensioneBreve(recensioneBreve);
 
-            logger.info("Salvata RecensioneBreve: " + recensioneBreve);
+            logger.info("A RecensioneBreve HAS BEEN SAVED: " + recensioneBreve);
         } catch (Exception e) {
-            logger.severe("Errore nella deserializzazione della recensione: " + e.getMessage());
+            logger.severe("ERROR SERIALIZING A RECENSIONE: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -131,5 +128,4 @@ public class RecensioniSeguiteServiceImp implements RecensioniSeguiteService {
 
         return recensioneBreveService.findByGenereIn(generiSeguiti);
     }
-
 }

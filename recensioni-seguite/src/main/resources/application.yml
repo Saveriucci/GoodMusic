@@ -11,9 +11,6 @@ spring:
         healthCheckInterval: 10s
         healthCheckCriticalTimeout: 45s
         queryPassing: true
-    loadbalancer:
-      ribbon:
-        enabled: false
   datasource:
     url: jdbc:postgresql://localhost:5432/recensioni-seguite
     username: postgres
@@ -21,8 +18,10 @@ spring:
     driver-class-name: org.postgresql.Driver
     initialization-mode: always
   jpa:
+    show_sql: true
     hibernate:
       ddl-auto: update
+      format_sql: true
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   kafka:
     bootstrap-servers: asw-kafka:9092  # Indirizzo del broker Kafka

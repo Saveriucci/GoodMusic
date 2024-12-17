@@ -1,6 +1,19 @@
 spring:
   main:
     web-application-type: NONE
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery: 
+        instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        # configurazione per effettuare esprimenti, NON USARE UN PRODUZIONE 
+        # dopo quanto tempo consul deve smettere di restituire servizi che non rispondono all'health check? 
+        #healthCheckCriticalTimeout: 45s
+        # consul deve restituire solo servizi che passano l'health check (default=false) 
+        queryPassing: true 
   kafka:
     bootstrap-servers: asw-kafka:9092
     consumer:
@@ -21,3 +34,6 @@ spring:
       in: asw-RecensioniCreatedToFiltro
       out: asw-FiltroToRecensioniBreve
     groupid: simple-filter
+
+server: 
+  port: ${PORT:${SERVER_PORT:0}}

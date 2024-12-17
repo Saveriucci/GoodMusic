@@ -26,4 +26,16 @@ public class Connessione {
 	/* ruolo del seguito: può essere ARTISTA oppure RECENSORE oppure GENERE */
 	private String ruolo;
 
+	@Override
+	public int hashCode() {
+		return Long.hashCode(this.id);
+	}
+
+	@Override
+	public boolean equals(Object other1) {
+		Connessione other = (Connessione) other1;
+		return this.id == other.getId() && this.utente.equals(other.getUtente())
+				&& this.seguito.equals(other.getSeguito()) && this.ruolo.equals(other.getRuolo());
+	}
+
 }
