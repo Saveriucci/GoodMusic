@@ -1,0 +1,27 @@
+spring: 
+  application:
+    name: apigateway
+    
+  cloud:
+    consul:
+      discovery: 
+        instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        queryPassing: true
+    loadbalancer: 
+      retry:
+        enabled: true  # Abilita il retry in caso di errore
+      discovery:
+        enabled: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true  # Abilita la configurazione automatica delle rotte da Consul
+
+server: 
+  port: 8080  # Porta fissa per il Gateway
+
+management: 
+  endpoint.gateway.enabled: true 
+  endpoints.web.exposure.include: info,health,gateway,beans

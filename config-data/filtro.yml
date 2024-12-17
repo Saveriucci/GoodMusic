@@ -1,0 +1,30 @@
+spring: 
+  application: 
+    name: filtro
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery: 
+        instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        queryPassing: true 
+
+  kafka:
+    bootstrap-servers: asw-kafka:9092
+    consumer:
+      group-id: FiltroRecensioniToBrevi
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      batch-size: 0
+    filter:
+      name: RecensioniToRecensioniBrevi
+    channel:
+      in: asw-RecensioniCreatedToFiltro
+      out: asw-FiltroToRecensioniBreve
+    groupid: simple-filter
