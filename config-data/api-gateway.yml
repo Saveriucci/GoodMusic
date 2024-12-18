@@ -1,6 +1,9 @@
 spring: 
   application:
     name: apigateway
+  config:
+    activate:
+      on-profile: prod
     
   cloud:
     consul:

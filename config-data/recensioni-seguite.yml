@@ -1,7 +1,10 @@
 spring:
   application:
     name: recensioni-seguite
-    
+  config:
+    activate:
+      on-profile: prod
+
   cloud:
     consul:
       host: localhost
