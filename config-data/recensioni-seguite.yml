@@ -43,6 +43,6 @@ spring:
           channel-in: asw-ConnessioneCreated  # Canale per connessioni
         ConnessioniDeleted:
           channel-in: asw-ConnessioneDeleted  # Canale per connessioni
-
 server:
+  port: ${PORT:${SERVER_PORT:0}}
   forward-headers-strategy: framework

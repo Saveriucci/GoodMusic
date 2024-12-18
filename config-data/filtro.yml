@@ -28,3 +28,7 @@ spring:
       in: asw-RecensioniCreatedToFiltro
       out: asw-FiltroToRecensioniBreve
     groupid: simple-filter
+
+server:
+  port: ${PORT:${SERVER_PORT:0}}
+  forward-headers-strategy: framework

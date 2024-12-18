@@ -32,7 +32,8 @@ spring:
         out2: asw-ConnessioneDeleted
       messages-to-send: 20
 
-server: 
+server:
+  port: ${PORT:${SERVER_PORT:0}}
   forward-headers-strategy: framework
 
 spring.jpa.open-in-view: false

@@ -1,5 +1,3 @@
-# application.yml
---- 
 spring: 
   application: 
     name: recensioni
@@ -42,7 +40,8 @@ spring:
         out: asw-RecensioniCreatedToFiltro  # Nome del topic a cui inviare i messaggi Kafka
       messages-to-send: 20
 
-server: 
-  forward-headers-strategy: framework
-
 spring.jpa.open-in-view: false
+
+server:
+  port: ${PORT:${SERVER_PORT:0}}
+  forward-headers-strategy: framework
