@@ -1,6 +1,6 @@
 spring:
-  main:
-    web-application-type: NONE
+  application:
+    name: filtro
   cloud:
     consul:
       host: localhost

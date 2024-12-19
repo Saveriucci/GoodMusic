@@ -21,15 +21,16 @@ public class RecensioneBreveServiceImp implements RecensioneBreveService {
             Optional<RecensioneBreve> existingRecensione = recensioneBreveRepository.findById(recensioneBreve.getId());
 
             if (existingRecensione.isPresent()) {
-                logger.info("La recensione con ID " + recensioneBreve.getId() + " esiste già. Non verrà salvata.");
+                logger.info("RECENSIONE BREVE OBJECT WITH ID " + recensioneBreve.getId()
+                        + " ALREADY EXISTING, WON'T BE SAVED.");
                 return existingRecensione.get();
             } else {
                 // Se la recensione non esiste, salvala nel database
                 return recensioneBreveRepository.save(recensioneBreve);
             }
         } catch (Exception e) {
-            logger.severe("Errore durante il salvataggio della recensione: " + e.getMessage());
-            throw new RuntimeException("Errore durante il salvataggio della recensione", e);
+            logger.severe("ERROR DURING SAVING THE RECENSIONE BREVE OBJECT: " + e.getMessage());
+            throw new RuntimeException("ERROR DURING SAVING THE RECENSIONE BREVE OBJECT", e);
         }
     }
 

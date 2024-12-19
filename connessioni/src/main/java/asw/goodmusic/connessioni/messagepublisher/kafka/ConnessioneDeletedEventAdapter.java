@@ -37,7 +37,7 @@ public class ConnessioneDeletedEventAdapter implements ConnessioneDeletedEventPu
             // Facoltativo: forza l'invio del messaggio (utile in alcuni casi)
             // template.flush();
         } catch (Exception e) {
-            logger.severe("Error sendind the message: " + e.getMessage());
+            logger.severe("ERROR SENDING THE MESSAGE: " + e.getMessage());
         }
     }
 }

@@ -33,14 +33,19 @@ public class RecensioniSeguiteController {
 		Instant start = Instant.now();
 		logger.info("REST CALL: getRecensioniSeguite " + utente);
 
-		/*
-		 * CompletableFuture<Collection<RecensioneBreve>> recensioniFuture =
-		 * recensioniSeguiteServiceAsync
-		 * .getRecensioniSeguite(utente);
-		 * Collection<RecensioneBreve> recensioni = recensioniFuture.join();
-		 */
-
-		Collection<RecensioneBreve> recensioni = recensioniSeguiteService.getRecensioniSeguite(utente);
+		Collection<RecensioneBreve> recensioni;
+		try {
+			recensioni = recensioniSeguiteService.getRecensioniSeguite(utente);
+		} catch (Exception e1) {
+			try {
+				CompletableFuture<Collection<RecensioneBreve>> recensioniFuture = recensioniSeguiteServiceAsync
+						.getRecensioniSeguite(utente);
+				recensioni = recensioniFuture.join();
+			} catch (Exception e2) {
+				throw new RuntimeException(
+						"ERROR WHILE USING THE RECENSION AND CONNESSIONI SERVICES" + e2.getMessage());
+			}
+		}
 
 		Duration duration = Duration.between(start, Instant.now());
 		logger.info("getRecensioniSeguite " + utente
@@ -48,5 +53,4 @@ public class RecensioniSeguiteController {
 				+ " --> " + recensioni);
 		return recensioni;
 	}
-
 }

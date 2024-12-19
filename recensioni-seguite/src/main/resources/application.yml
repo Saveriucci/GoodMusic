@@ -39,7 +39,11 @@ spring:
           channel-in: asw-ConnessioneCreated  # Canale per connessioni
         ConnessioniDeleted:
           channel-in: asw-ConnessioneDeleted  # Canale per connessioni
-
-server:
+server: 
   port: ${PORT:${SERVER_PORT:0}}
   forward-headers-strategy: framework
+
+# fa il logging dei comandi sql eseguiti 
+#spring.jpa.show-sql: true
+# disable OSIV
+spring.jpa.open-in-view: false

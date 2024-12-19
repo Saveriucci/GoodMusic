@@ -43,7 +43,7 @@ public class ConnessioneCreatedEventAdapter implements ConnessioneCreatedEventPu
             // Facoltativo: forza l'invio del messaggio (utile in alcuni casi)
             // template.flush();
         } catch (Exception e) {
-            logger.severe("Error while serializing Recensione object to JSON: " + e.getMessage());
+            logger.severe("ERROR WHILE SERIALIZING CONNESSIONE OBJECT TO JSON: " + e.getMessage());
         }
     }
 }

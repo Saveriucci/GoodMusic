@@ -50,7 +50,7 @@ public class RecensioniSeguiteServiceImp implements RecensioniSeguiteService {
 
             logger.info("A RecensioneBreve HAS BEEN SAVED: " + recensioneBreve);
         } catch (Exception e) {
-            logger.severe("ERROR SERIALIZING A RECENSIONE: " + e.getMessage());
+            logger.severe("ERROR SERIALIZING A RECENSIONE BREVE OBJECT: " + e.getMessage());
             e.printStackTrace();
         }
     }

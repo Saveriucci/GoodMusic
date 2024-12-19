@@ -1,10 +1,11 @@
 package asw.simplefilter.domain;
 
-import org.springframework.stereotype.Service;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class SimpleFilterService {
@@ -21,10 +22,10 @@ public class SimpleFilterService {
 
 			publishRecensioneBreve(recensioneBreve);
 
-			logger.info(String.format("Recensione elaborata e pubblicata con successo: %s", recensioneBreve.getId()));
+			logger.info(String.format("RECENSIONE ELABORATED AND PUBLISHED SUCCESSFULLY: %s", recensioneBreve.getId()));
 
 		} catch (Exception e) {
-			logger.severe(String.format("Errore durante il processamento del messaggio: %s", e.getMessage()));
+			logger.severe(String.format("ERROR DURING PROCESSING A RECENSIONE OBJECT: %s", e.getMessage()));
 			e.printStackTrace();
 		}
 	}
@@ -34,8 +35,8 @@ public class SimpleFilterService {
 			// deserializzazione JSON in un oggetto Recensione
 			return new ObjectMapper().readValue(recordValue, Recensione.class);
 		} catch (Exception e) {
-			logger.severe(String.format("Errore nella conversione del record in Recensione: %s", e.getMessage()));
-			throw new Exception("Errore nella conversione della Recensione", e);
+			logger.severe(String.format("ERROR CONVERTING RECENSIONE OBJECT: %s", e.getMessage()));
+			throw new Exception("ERROR CONVERTING RECENSIONE OBJECT", e);
 		}
 	}
 
@@ -45,7 +46,7 @@ public class SimpleFilterService {
 
 	private void publishRecensioneBreve(RecensioneBreve recensioneBreve) {
 		try {
-			// Conversioen dell oggetto in stringa json
+			// Conversione dell oggetto in stringa json
 			String recensioneBreveJson = new ObjectMapper().writeValueAsString(recensioneBreve);
 
 			simpleMessagePublisher.publish(recensioneBreveJson);

@@ -32,14 +32,4 @@ public class RecensionBreviListener {
         recensioniSeguiteService.saveRecensioneBreve(record.value());
     }
 
-    /*
-     * @KafkaListener(topics = "${spring.kafka.consumer.kafka.channel.in}", groupId
-     * = "${spring.kafka.consumer.kafka.groupid}")
-     * public void listenConnessioni(ConsumerRecord<String, String> record) throws
-     * Exception {
-     * // logger.info("MESSAGE LISTENER: " + record.toString());
-     * String message = record.value();
-     * }
-     * 
-     */
 }

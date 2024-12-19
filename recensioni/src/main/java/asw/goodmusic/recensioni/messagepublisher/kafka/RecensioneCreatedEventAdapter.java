@@ -1,18 +1,16 @@
 package asw.goodmusic.recensioni.messagepublisher.kafka;
 
-import asw.goodmusic.recensioni.domain.Recensione;
-import asw.goodmusic.recensioni.domain.RecensioneCreatedEventPublisherPort;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
 import org.springframework.kafka.core.KafkaTemplate;
-
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.logging.Logger;
+import asw.goodmusic.recensioni.domain.Recensione;
+import asw.goodmusic.recensioni.domain.RecensioneCreatedEventPublisherPort;
 
 @Component
 public class RecensioneCreatedEventAdapter implements RecensioneCreatedEventPublisherPort {
@@ -42,7 +40,7 @@ public class RecensioneCreatedEventAdapter implements RecensioneCreatedEventPubl
             // Facoltativo: forza l'invio del messaggio (utile in alcuni casi)
             // template.flush();
         } catch (Exception e) {
-            logger.severe("Error while serializing Recensione object to JSON: " + e.getMessage());
+            logger.severe("ERROR WHILE SERIALIZING RECENSIONE OBJECT TO JSON: " + e.getMessage());
         }
     }
 }
