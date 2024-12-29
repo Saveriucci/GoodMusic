@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recensioni-seguite-db
+  namespace: asw-goodmusic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: asw-goodmusic
+  template:
+    metadata:
+      labels:
+        app: asw-goodmusic
+    spec:
+      containers:
+        - name: recensioni-seguite-db
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: recensioni-seguite
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres

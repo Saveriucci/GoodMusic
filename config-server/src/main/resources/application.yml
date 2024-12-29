@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Saveriucci/GoodMusic.git  
+          searchPaths: config-data/
+          default-label: test-config
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        enabled: true
+        instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        queryPassing: true
+
+server:
+  port: 8888  # Porta del Config Server

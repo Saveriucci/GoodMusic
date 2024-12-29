@@ -1,0 +1,39 @@
+spring: 
+  application: 
+    name: recensioni
+  cloud:
+    consul:
+      host: consul.asw-goodmusic.svc.cluster.local
+      port: 8500
+      discovery: 
+        instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        queryPassing: true 
+  datasource:
+    url: jdbc:postgresql://recensioni-db.asw-goodmusic.svc.cluster.local:5432/recensioni
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: kafka.asw-goodmusic.svc.cluster.local:9092  # Indirizzo del broker Kafka
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer  # Serializzatore per la chiave (String)
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer  # Serializzatore per il valore (Recensione)
+      name: Producer
+      channel:
+        out: asw-RecensioniCreatedToFiltro  # Nome del topic a cui inviare i messaggi Kafka
+      messages-to-send: 20
+server: 
+  port: ${PORT:${SERVER_PORT:0}}
+  forward-headers-strategy: framework
+
+# fa il logging dei comandi sql eseguiti 
+#spring.jpa.show-sql: true
+# disable OSIV
+spring.jpa.open-in-view: false

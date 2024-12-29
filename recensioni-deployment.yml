@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recensioni
+  namespace: asw-goodmusic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: asw-goodmusic
+  template:
+    metadata:
+      labels:
+        app: asw-goodmusic
+    spec:
+      containers:
+        - name: recensioni
+          image: thomasfarinelli/recensioni:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://recensioni-db.asw-goodmusic.svc.cluster.local:5432/recensioni"
+            - name: SPRING_CLOUD_CONSUL_HOST
+              value: "consul.asw-goodmusic.svc.cluster.local:8500"
+            - name: SPRING_CLOUD_CONSUL_PORT
+              value: "8500"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka.asw-goodmusic.svc.cluster.local:9092"

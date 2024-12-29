@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recensioni-db
+  namespace: asw-goodmusic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recensioni-db
+  template:
+    metadata:
+      labels:
+        app: recensioni-db
+    spec:
+      containers:
+        - name: recensioni-db
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: recensioni
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres

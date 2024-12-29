@@ -1,0 +1,512 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: asw-goodmusic
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: asw-goodmusic
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+    - host: asw-goodmusic.aswromatre.it
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-gateway
+                port:
+                  number: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway
+  namespace: asw-goodmusic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: asw-goodmusic
+  template:
+    metadata:
+      labels:
+        app: asw-goodmusic
+    spec:
+      containers:
+        - name: api-gateway
+          image: thomasfarinelli/api-service:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: production
+            - name: SPRING_CLOUD_CONSUL_HOST
+              value: "consul.asw-goodmusic.svc.cluster.local:8500"
+            - name: SPRING_CLOUD_CONSUL_PORT
+              value: "8500"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka.asw-goodmusic.svc.cluster.local:9092"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api-gateway
+  namespace: asw-goodmusic
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: asw-goodmusic
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: connessioni
+  namespace: asw-goodmusic
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: asw-goodmusic
+  template:
+    metadata:
+      labels:
+        app: asw-goodmusic
+    spec:
+      containers:
+        - name: connessioni
+          image: thomasfarinelli/connessioni:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://connessioni-db.asw-goodmusic.svc.cluster.local:5432/connessioni"
+            - name: SPRING_CLOUD_CONSUL_HOST
+              value: "consul.asw-goodmusic.svc.cluster.local:8500"
+            - name: SPRING_CLOUD_CONSUL_PORT
+              value: "8500"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka.asw-goodmusic.svc.cluster.local:9092"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: connessioni
+  namespace: asw-goodmusic
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: asw-goodmusic
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recensioni
+  namespace: asw-goodmusic
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: asw-goodmusic
+  template:
+    metadata:
+      labels:
+        app: asw-goodmusic
+    spec:
+      containers:
+        - name: recensioni
+          image: thomasfarinelli/recensioni:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://recensioni-db.asw-goodmusic.svc.cluster.local:5432/recensioni"
+            - name: SPRING_CLOUD_CONSUL_HOST
+              value: "consul.asw-goodmusic.svc.cluster.local:8500"
+            - name: SPRING_CLOUD_CONSUL_PORT
+              value: "8500"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka.asw-goodmusic.svc.cluster.local:9092"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recensioni
+  namespace: asw-goodmusic
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: asw-goodmusic
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recensioni-seguite
+  namespace: asw-goodmusic
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: asw-goodmusic
+  template:
+    metadata:
+      labels:
+        app: asw-goodmusic
+    spec:
+      containers:
+        - name: recensioni-seguite
+          image: thomasfarinelli/recensioni-seguite:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://recensioni-seguite-db.asw-goodmusic.svc.cluster.local:5432/recensioni-seguite"
+            - name: SPRING_CLOUD_CONSUL_HOST
+              value: "consul.asw-goodmusic.svc.cluster.local:8500"
+            - name: SPRING_CLOUD_CONSUL_PORT
+              value: "8500"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka.asw-goodmusic.svc.cluster.local:9092"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recensioni-seguite
+  namespace: asw-goodmusic
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: asw-goodmusic
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filtro
+  namespace: asw-goodmusic
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: asw-goodmusic
+  template:
+    metadata:
+      labels:
+        app: asw-goodmusic
+    spec:
+      containers:
+        - name: filtro
+          image: thomasfarinelli/filtro:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: "jdbc:postgresql://connessioni-db:5432/connessioni"
+            - name: SPRING_CLOUD_CONSUL_HOST
+              value: "consul.asw-goodmusic.svc.cluster.local:8500"
+            - name: SPRING_CLOUD_CONSUL_PORT
+              value: "8500"
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "kafka.asw-goodmusic.svc.cluster.local:9092"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: filtro
+  namespace: asw-goodmusic
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: asw-goodmusic
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: connessioni-db
+  namespace: asw-goodmusic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: connessioni-db
+  template:
+    metadata:
+      labels:
+        app: connessioni-db
+    spec:
+      containers:
+        - name: connessioni-db
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: connessioni
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: connessioni-db
+  namespace: asw-goodmusic
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: connessioni-db
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recensioni-db
+  namespace: asw-goodmusic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recensioni-db
+  template:
+    metadata:
+      labels:
+        app: recensioni-db
+    spec:
+      containers:
+        - name: recensioni-db
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: recensioni
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recensioni-db
+  namespace: asw-goodmusic
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: recensioni-db
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recensioni-seguite-db
+  namespace: asw-goodmusic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recensioni-seguite-db
+  template:
+    metadata:
+      labels:
+        app: recensioni-seguite-db
+    spec:
+      containers:
+        - name: recensioni-seguite-db
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: recensioni-seguite
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: recensioni-seguite-db
+  namespace: asw-goodmusic
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: recensioni-seguite-db
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka
+  namespace: asw-goodmusic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+        - name: kafka
+          image: docker.io/bitnami/kafka:3.8
+          env:
+            # KRaft settings
+            - name: KAFKA_CFG_NODE_ID
+              value: "0"
+            - name: KAFKA_CFG_PROCESS_ROLES
+              value: "controller,broker"
+            - name: KAFKA_CFG_CONTROLLER_QUORUM_VOTERS
+              value: "0@kafka:9093"
+            - name: KAFKA_CFG_LISTENERS
+              value: "PLAINTEXT://:9092,CONTROLLER://:9093"
+            - name: KAFKA_CFG_ADVERTISED_LISTENERS
+              value: "PLAINTEXT://:9092"
+            - name: KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP
+              value: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT"
+            - name: KAFKA_CFG_CONTROLLER_LISTENER_NAMES
+              value: "CONTROLLER"
+            - name: KAFKA_CFG_INTER_BROKER_LISTENER_NAME
+              value: "PLAINTEXT"
+            - name: KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE
+              value: "true"
+            - name: KAFKA_CFG_NUM_PARTITIONS
+              value: "4"
+            # Remove Zookeeper settings
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECT
+              value: ""
+            - name: KAFKA_CFG_ZOOKEEPER_CONNECTION_TIMEOUT_MS
+              value: "6000"
+          ports:
+            - containerPort: 9092
+            - containerPort: 9093
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka
+  namespace: asw-goodmusic
+spec:
+  ports:
+    - name: kafka-port-1
+      port: 9092
+      targetPort: 9092
+    - name: kafka-port-2
+      port: 9093
+      targetPort: 9093
+  selector:
+    app: kafka
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zookeeper
+  namespace: asw-goodmusic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zookeeper
+  template:
+    metadata:
+      labels:
+        app: zookeeper
+    spec:
+      containers:
+        - name: zookeeper
+          image: bitnami/zookeeper:3.8
+          env:
+            - name: ALLOW_ANONYMOUS_LOGIN
+              value: "yes"
+          ports:
+            - containerPort: 2181
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper
+  namespace: asw-goodmusic
+spec:
+  ports:
+    - port: 2181
+      targetPort: 2181
+  selector:
+    app: zookeeper
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consul
+  namespace: asw-goodmusic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consul
+  template:
+    metadata:
+      labels:
+        app: consul
+    spec:
+      containers:
+        - name: consul
+          image: docker.io/hashicorp/consul
+          ports:
+            - containerPort: 8500
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: consul
+  namespace: asw-goodmusic
+spec:
+  ports:
+    - port: 8500
+      targetPort: 8500
+  selector:
+    app: consul
