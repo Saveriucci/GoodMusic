@@ -9,24 +9,6 @@ services:
       - my-network
     command: "consul agent -dev -client=0.0.0.0"  # Esegue consul in modalità sviluppo
 
-  config-server-service:
-    build: ./config-server # Indica la directory dove si trova il Dockerfile
-    container_name: config-server
-    environment:
-      SPRING_CLOUD_CONSUL_HOST: consul
-      SPRING_CLOUD_CONSUL_PORT: 8500  
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: asw-kafka:9092
-    depends_on:
-      - consul
-    ports:
-      - "8888"  # porta dinamica mappata sulla 8888 dell' host
-    networks:
-      - my-network
-    deploy:
-      replicas: 1  # Numero di repliche
-      restart_policy:
-        condition: on-failure
-
   api-gateway-service:
     build: ./api-gateway  # Indica la directory dove si trova il Dockerfile
     container_name: api-gateway-service
@@ -36,7 +18,7 @@ services:
       - SPRING_CLOUD_CONSUL_HOST=consul
       - SPRING_CLOUD_CONSUL_PORT=8500     
     depends_on:
-      - config-server-service
+      - consul
     networks:
       - my-network
 
@@ -121,7 +103,6 @@ services:
       - connessioni-db
       - consul
       - kafka
-      - config-server-service
     ports:
       - "8080"  # porta dinamica mappata sulla 8080 dell' host
     networks:
@@ -141,7 +122,6 @@ services:
     depends_on:
       - consul
       - kafka
-      - config-server-service
     ports:
       - "8080"  # porta dinamica mappata sulla 8080 dell' host 
     networks:
@@ -165,7 +145,6 @@ services:
       - recensioni-db
       - consul
       - kafka
-      - config-server-service
     ports:
       - "8080"  # porta dinamica mappata sulla 8080 dell' host
     networks:
@@ -189,7 +168,6 @@ services:
       - recensioni-seguite-db
       - consul
       - kafka
-      - config-server-service
     ports:
       - "8080"  # porta dinamica mappata sulla 8080 dell' host
     networks:

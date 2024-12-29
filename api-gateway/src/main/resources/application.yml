@@ -20,16 +20,35 @@
         retry:
           enabled: true  # Abilita il retry in caso di errore
         discovery:
-          enabled: true
+          enabled: true 
   
       # spring cloud gateway routes 
       gateway:
-        discovery:
-          locator:
-            # spring.cloud.gateway.discovery.locator.enabled abilita la definizione implicita di rotte 
-            # sulla base dei servizi registrati nel servizio di service discover (default=false) 
-            # enabled: true       
-            enabled: true
+            discovery:
+              locator:
+                # spring.cloud.gateway.discovery.locator.enabled abilita la definizione implicita di rotte 
+                # sulla base dei servizi registrati nel servizio di service discover (default=false) 
+                # enabled: true       
+                enabled: false
+            routes:
+            - id: recensioni_seguite_route
+              uri: lb://recensioni-seguite
+              predicates:
+              - Path=/recensioni-seguite/**
+              filters:
+              - StripPrefix=1
+            - id: recensioni_route
+              uri: lb://recensioni
+              predicates:
+              - Path=/recensioni/**
+              filters:
+              - StripPrefix=1
+            - id: connessioni_route
+              uri: lb://connessioni
+              predicates:
+              - Path=/connessioni/**
+              filters:
+              - StripPrefix=1
       
   server: 
   #  port: ${PORT:${SERVER_PORT:0}}

@@ -15,7 +15,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @Primary
@@ -32,7 +31,7 @@ public class RecensioniSeguiteServiceImp implements RecensioniSeguiteService {
     @Override
     public Collection<RecensioneBreve> getRecensioniSeguite(String utente) {
         Collection<Connessione> connessioniUtente = connessioneService.getConnessioniByUtente(utente);
-        Collection<RecensioneBreve> recensioni = new ArrayList<RecensioneBreve>();
+        Set<RecensioneBreve> recensioni = new HashSet<RecensioneBreve>();
         recensioni.addAll(getRecensioniPerRecensori(connessioniUtente));
         recensioni.addAll(getRecensioniPerArtisti(connessioniUtente));
         recensioni.addAll(getRecensioniPerGeneri(connessioniUtente));
