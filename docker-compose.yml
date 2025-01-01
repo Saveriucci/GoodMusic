@@ -108,7 +108,7 @@ services:
     networks:
       - my-network
     deploy:
-      replicas: 1  # Numero di repliche
+      replicas: 2  # Numero di repliche
       restart_policy:
         condition: on-failure
 
@@ -127,7 +127,7 @@ services:
     networks:
       - my-network
     deploy:
-      replicas: 1  # Numero di repliche
+      replicas: 2  # Numero di repliche
       restart_policy:
         condition: on-failure
 
@@ -150,7 +150,7 @@ services:
     networks:
       - my-network
     deploy:
-      replicas: 1  # Numero di repliche
+      replicas: 2  # Numero di repliche
       restart_policy:
         condition: on-failure
 
@@ -173,7 +173,7 @@ services:
     networks:
       - my-network
     deploy:
-      replicas: 1  # Numero di repliche
+      replicas: 2  # Numero di repliche
       restart_policy:
         condition: on-failure
 
